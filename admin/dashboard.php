@@ -54,6 +54,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     }
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete') {
+    $confession_id = intval($_POST['confession_id'] ?? 0);
+    
+    if ($confession_id > 0) {
+        $stmt = $conn->prepare("DELETE FROM confessions WHERE id = ?");
+        $stmt->bind_param("i", $confession_id);
+        
+        if ($stmt->execute()) {
+            $success = '🗑️ Confess berhasil dihapus!';
+        } else {
+            $error = 'Gagal menghapus confess!';
+        }
+    }
+}
+
 $pending = $conn->query("SELECT COUNT(*) as count FROM confessions WHERE status = 'pending'")->fetch_assoc()['count'];
 $approved = $conn->query("SELECT COUNT(*) as count FROM confessions WHERE status = 'approved'")->fetch_assoc()['count'];
 $rejected = $conn->query("SELECT COUNT(*) as count FROM confessions WHERE status = 'rejected'")->fetch_assoc()['count'];
@@ -542,6 +557,17 @@ while ($row = $result->fetch_assoc()) {
                         <small style="color: #999;">
                             Disetujui: <?= date('d M Y H:i', strtotime($confession['approved_at'])) ?>
                         </small>
+                        
+                        <div class="confession-actions" style="margin-top: 15px;">
+                            <form method="POST" style="display: inline;">
+                                <input type="hidden" name="confession_id" value="<?= $confession['id'] ?>">
+                                <input type="hidden" name="action" value="delete">
+                                <button type="submit" class="btn btn-reject" 
+                                        onclick="return confirm('Hapus pesan ini?')">
+                                    🗑️ Hapus
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
