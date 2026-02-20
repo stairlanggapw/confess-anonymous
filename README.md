@@ -25,7 +25,7 @@ Confess Anonymous adalah platform yang memungkinkan pengguna untuk mengirimkan c
 - ✅ **Approve Confess** - Setujui pesan untuk tampil di publik
 - ✅ **Reject Confess** - Tolak pesan yang tidak sesuai
 - ✅ **Blokir User** - Blokir user dari mengirim confess lagi
-- ✅ **delete users messagesdelete users messages**
+- ✅ **Delete Users Messages** -Hapus pesan confess user dari dashboard
 
 ### 🌍 Public Features
 - ✅ **View All Approved Confess** - Melihat semua confess yang sudah disetujui
